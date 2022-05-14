@@ -164,6 +164,8 @@ class Blockchain:
 		'''
 		json_data = {'data': sharedData}
 
+		print(self.nodes)
+
 		for node in self.nodes:
 			if (pingNode(node)):
 				answer = requests.post(f'http://{node}/nodes/shareLatestData', json=json_data)
@@ -322,11 +324,11 @@ def getChain():
 
 	return jsonify(answer), 200
 
-nodesToAdd = ["127.0.0.1:5002", "127.0.0.1:5003"]
+nodesToAdd = ["http://127.0.0.1:5002", "http://127.0.0.1:5003"]
 
 for node in nodesToAdd:
-	port = node.split(':')[1]
-	if (port != nodePort):
+	port = node.split(':')[2]
+	if (int(port) != nodePort):
 		blockchain.addNode(node)
 
 """
